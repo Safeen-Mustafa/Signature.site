@@ -310,7 +310,7 @@
             background: var(--primary-red); transform: translateY(-4px) scale(1.02);
             box-shadow: 0 10px 22px rgba(198,40,40,0.35); border-color: rgba(255,255,255,0.2);
         }
-        .delivery-note { font-size: 0.8rem; color: #777; margin-top: 12px; text-align: center; font-style: italic; padding-top: 12px; }
+        .delivery-note { font-size: 15px; color: black; margin-top: 12px; text-align: center; font-style: italic; padding-top: 12px; }
 
         /* Contact – exact same */
         .contact-section { background: var(--white); }
@@ -387,6 +387,14 @@
             .cart-modal { width: 100%; right: -100%; }
             .footer-container { grid-template-columns: 1fr; gap: 40px; }
         }
+        .l10inch{
+            font-size:40px; 
+            color:rgb(151, 9, 9); 
+            display: flex;
+            align-self: center;
+            justify-content: center;
+            
+        }
     </style>
 </head>
 <body>
@@ -461,7 +469,8 @@
                 <p>Our renowned collection – two sizes, baked fresh daily. Prices from your table.</p>
             </div>
             <div class="cakes-grid" id="cakesGrid"></div>
-            <div class="delivery-note"><i class="fas fa-truck" style="color: var(--primary-red);"></i> All orders include a £5 delivery charge.</div>
+            <h2 class="l10inch">10" Also Available for just 10£ More</h2>
+            <div class="delivery-note">£5 more if customization.</div>
         </div>
     </section>
     <!-- ========== Tarts – exact prices from image 0099 ========= -->
@@ -473,7 +482,7 @@
             </div>
             <div class="tart-grid" id="tartGrid">
             </div>
-            <div class="delivery-note"><i class="fas fa-truck" style="color: var(--primary-red);"></i> All orders include a £5 delivery charge.</div>
+            <div class="delivery-note">£5 more if customization.</div>
         </div>
     </section>
 
@@ -486,7 +495,7 @@
             </div>
             <div class="milkycake-grid" id="milkycakeGrid">
             </div>
-            <div class="delivery-note"><i class="fas fa-truck" style="color: var(--primary-red);"></i> All orders include a £5 delivery charge.</div>
+            <div class="delivery-note">£5 more if customization.</div>
         </div>
     </section>
     <!-- ========== BIRYANI – exact prices from image 0099 ========= -->
@@ -497,9 +506,7 @@
                 <p>Our renowned collection.</p>
             </div>
             <div class="biryani-grid" id="biryaniGrid">
-
             </div>
-            <div class="delivery-note"><i class="fas fa-truck" style="color: var(--primary-red);"></i> All orders include a £5 delivery charge.</div>
         </div>
     </section>
 
@@ -604,8 +611,11 @@
                 { id: 2, name: 'Red Velvet 8"', size: '', price: 35, image: 'pics/red-velvet-cake.jpeg', alt: 'Red Velvet Cake 8 inch' },
                 { id: 4, name: 'Carrot Cake 8"', size: '', price: 35, image: 'pics/carrot-cake.jpeg', alt: 'Carrot Cake 8 inch' },
                 { id: 10, name: 'Lotus Cake 8"', size: '', price: 30, image: 'pics/lotus-cake.jpeg', alt: 'Lotus Biscoff Cake 8 inch' },
-                { id: 12, name: 'Fancy Cake 8"', size: '', price: 25, image:'pics/fancy-cake.jpeg', alt: 'Fancy Celebration Cake 8 inch' },
-                { id: 13, name: 'Matelda Cake 8"', size: '', price: 25, image:'pics/matilda-cake.jpeg', alt: 'Matelda Cake 8 inch' },
+                { id: 12, name: 'Fancy Cake 8"', size: '', price: 35, image:'pics/fancy-cake.jpeg', alt: 'Fancy Celebration Cake 8 inch' },
+                { id: 13, name: 'Matelda Cake 8"', size: '', price: 40, image:'pics/matilda-cake.jpeg', alt: 'Matelda Cake 8 inch' },
+                { id: 14, name: 'Chocolate Fudge', size: 'each', price: 30, image: 'pics/chocolate-fudge-cake.jpeg',alt: 'Chocolate Matilda cake'  },
+                { id: 15, name: 'Oreo', size: 'each', price: 30, image: 'pics/oreo-cake.jpeg', alt: 'Almond Cake slice' },
+           
             ],
             // Individual desserts – from IMG-0100 (no size, price as given)
             individualDesserts: [
@@ -616,8 +626,8 @@
             ],
             Biryanis: [
                 { id: 104, name: 'Chicken Biryani',size: 'each', price: 3, image:'pics/chicken-biryani.PNG'},
-                { id: 105, name: 'Zarda',size: 'each', price: 3, image:'pics/zarda-rice.PNG'},
-                { id: 106, name: 'Chicken Pulao',size: 'each', price: 3, image:'pics/chicken-pulao.PNG'}
+                { id: 105, name: 'Zarda',size: 'each', price: 3, image:'pics/zarda-rice.png'},
+                { id: 106, name: 'Chicken Pulao',size: 'each', price: 3, image:'pics/chicken-pulao.png'}
             ],
             Tarts:[
                 { id: 107, name: 'Fruit Tart',size: 'each', price: 3.500, image:'pics/fruit-tart.jpeg'},
@@ -633,7 +643,13 @@
         };
 
         // Combine for easy cart lookups
-        const allProducts = [...cakeCatalog.wholeCakes, ...cakeCatalog.individualDesserts];
+        const allProducts = [
+    ...cakeCatalog.wholeCakes,
+    ...cakeCatalog.individualDesserts,
+    ...cakeCatalog.Biryanis,
+    ...cakeCatalog.Tarts,
+    ...cakeCatalog.Milkycakes
+]
 
         // ---------- 2. CART STATE ----------
         let cart = [];
@@ -778,7 +794,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Render whole cakes and individual desserts with REAL matching images
             renderProductGrid(cakeCatalog.wholeCakes, 'cakesGrid');
-            renderProductGrid(cakeCatalog.individualDesserts, 'dessertsGrid');
             renderProductGrid(cakeCatalog.Biryanis, 'biryaniGrid');
             renderProductGrid(cakeCatalog.Tarts, 'tartGrid');
             renderProductGrid(cakeCatalog.Milkycakes, 'milkycakeGrid');
